@@ -71,7 +71,7 @@ npm test
 Seed demo users:
 
 ```bash
-npm --workspace backend run seed:demo-users
+npm run seed:demo
 ```
 
 Default local demo password: `TransitOpsDemo@123`. Override it with `DEMO_USER_PASSWORD`.
