@@ -89,7 +89,7 @@ function getCookieMaxAge() {
 export function authCookieOptions() {
   return {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: isProduction ? "none" : "lax",
     secure: isProduction,
     maxAge: getCookieMaxAge()
   };
@@ -102,7 +102,7 @@ export function setAuthCookie(res, token) {
 export function clearAuthCookie(res) {
   res.clearCookie(env.authCookieName, {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: isProduction ? "none" : "lax",
     secure: isProduction
   });
 }

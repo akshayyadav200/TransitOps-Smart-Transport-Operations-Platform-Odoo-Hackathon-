@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: transitops-api
+    runtime: node
+    plan: free
+    region: singapore
+    branch: develop
+    buildCommand: npm install && npm --workspace backend run build
+    startCommand: npm --workspace backend run start
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 20
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 1d
+      - key: AUTH_COOKIE_NAME
+        value: transitops_session
+      - key: DATABASE_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: DEMO_USER_PASSWORD
+        sync: false
