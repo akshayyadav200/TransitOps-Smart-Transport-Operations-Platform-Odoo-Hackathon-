@@ -1,4 +1,5 @@
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5001/api";
+const hostname = typeof window !== "undefined" ? window.location.hostname : "localhost";
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? `http://${hostname}:5001/api`;
 
 function buildUrl(path, params) {
   const url = new URL(path.replace(/^\//, ""), `${API_BASE_URL}/`);
