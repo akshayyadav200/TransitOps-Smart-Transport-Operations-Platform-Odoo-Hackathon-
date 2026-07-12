@@ -37,6 +37,14 @@ function normalizeError(error) {
     };
   }
 
+  if (Array.isArray(error?.errors)) {
+    return {
+      statusCode: error.statusCode ?? 400,
+      message: error.message ?? "Request failed",
+      errors: error.errors
+    };
+  }
+
   return {
     statusCode: error.statusCode ?? 500,
     message: error.message ?? "Internal server error",
