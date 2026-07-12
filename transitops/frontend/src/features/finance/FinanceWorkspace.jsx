@@ -71,16 +71,25 @@ export function FinanceWorkspace({ mode }) {
     setLoading(true);
 
     try {
-      const [dashboardPayload, reportsPayload, fuelPayload, expensePayload] = await Promise.all([
-        financeApi.dashboard(filters),
-        financeApi.reports(filters),
-        financeApi.fuel.list(filters),
-        financeApi.expenses.list(filters)
-      ]);
-      setDashboard(dashboardPayload.data.dashboard);
-      setReports(reportsPayload.data.reports);
-      setFuelLogs(fuelPayload.data.fuelLogs ?? []);
-      setExpenses(expensePayload.data.expenses ?? []);
+      if (mode === "dashboard" || mode === "analytics") {
+        const dashboardPayload = await financeApi.dashboard(filters);
+        setDashboard(dashboardPayload.data.dashboard);
+      }
+
+      if (mode === "reports") {
+        const reportsPayload = await financeApi.reports(filters);
+        setReports(reportsPayload.data.reports);
+      }
+
+      if (mode === "fuel") {
+        const fuelPayload = await financeApi.fuel.list(filters);
+        setFuelLogs(fuelPayload.data.fuelLogs ?? []);
+      }
+
+      if (mode === "expenses") {
+        const expensePayload = await financeApi.expenses.list(filters);
+        setExpenses(expensePayload.data.expenses ?? []);
+      }
     } catch (loadError) {
       setError(loadError);
     } finally {
@@ -90,7 +99,7 @@ export function FinanceWorkspace({ mode }) {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [mode]);
 
   function updateFilter(field, value) {
     setFilters((current) => ({ ...current, [field]: value }));

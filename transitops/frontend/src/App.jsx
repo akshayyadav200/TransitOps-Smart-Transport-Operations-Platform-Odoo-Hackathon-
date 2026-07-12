@@ -242,8 +242,18 @@ function RoutedApp() {
     );
   }
 
+  if (user && MODULE_PERMISSIONS[moduleName] && !MODULE_PERMISSIONS[moduleName].includes(user.role)) {
+    return (
+      <ProtectedRoute>
+        <AppShell pageTitle="Unauthorized">
+          <UnauthorizedPage />
+        </AppShell>
+      </ProtectedRoute>
+    );
+  }
+
   return (
-    <ProtectedRoute allowedRoles={MODULE_PERMISSIONS[moduleName]}>
+    <ProtectedRoute>
       <AppShell pageTitle={pageTitle}>
         <ModuleView moduleName={moduleName} />
       </AppShell>

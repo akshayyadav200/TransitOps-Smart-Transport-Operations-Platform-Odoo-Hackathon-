@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { AlertTriangle, CheckCircle2, Play, RefreshCw, Wrench, XCircle } from "lucide-react";
 import { EmptyState, ErrorState, FormError, LoadingSkeleton, PageHeader, StatusBadge } from "../../components/shared.jsx";
+import { vehicleApi } from "../fleet/fleetApi.js";
 import { formatIndianCurrency, safeValue } from "../../lib/formatters.js";
 import {
   cancelTrip,
@@ -72,15 +73,25 @@ export function OperationsWorkspace({ mode }) {
     setLoading(true);
 
     try {
-      const [nextTrips, options, nextMaintenance] = await Promise.all([
-        fetchTrips(),
-        fetchDispatchOptions(),
-        fetchMaintenanceRecords()
-      ]);
-      setTrips(nextTrips);
-      setVehicles(options.vehicles ?? []);
-      setDrivers(options.drivers ?? []);
-      setMaintenanceRecords(nextMaintenance);
+      if (mode === "maintenance") {
+        const [vehiclePayload, nextMaintenance] = await Promise.all([
+          vehicleApi.available({ limit: 100 }),
+          fetchMaintenanceRecords()
+        ]);
+        setTrips([]);
+        setVehicles(vehiclePayload.data.items ?? []);
+        setDrivers([]);
+        setMaintenanceRecords(nextMaintenance);
+      } else {
+        const [nextTrips, options] = await Promise.all([
+          fetchTrips(),
+          fetchDispatchOptions()
+        ]);
+        setTrips(nextTrips);
+        setVehicles(options.vehicles ?? []);
+        setDrivers(options.drivers ?? []);
+        setMaintenanceRecords([]);
+      }
     } catch (loadError) {
       setError(loadError);
     } finally {
@@ -90,7 +101,7 @@ export function OperationsWorkspace({ mode }) {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [mode]);
 
   function updateTripField(field, value) {
     setTripForm((current) => ({ ...current, [field]: value }));
