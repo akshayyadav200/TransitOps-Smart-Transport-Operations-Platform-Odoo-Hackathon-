@@ -3,14 +3,20 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const allowedNodeEnvironments = new Set(["development", "test", "production"]);
-const frontendUrls = (process.env.FRONTEND_URL ?? "http://localhost:5173,http://127.0.0.1:5173")
+const nodeEnv = process.env.NODE_ENV ?? "development";
+const configuredFrontendUrls = (process.env.FRONTEND_URL ?? "http://localhost:5173,http://127.0.0.1:5173")
   .split(",")
   .map((url) => url.trim())
   .filter(Boolean);
+const localPreviewUrls = ["http://localhost:4173", "http://127.0.0.1:4173"];
+const frontendUrls = [
+  ...configuredFrontendUrls,
+  ...(nodeEnv === "production" ? [] : localPreviewUrls)
+].filter((url, index, urls) => urls.indexOf(url) === index);
 
 export const env = {
   port: Number(process.env.PORT ?? 5000),
-  nodeEnv: process.env.NODE_ENV ?? "development",
+  nodeEnv,
   databaseUrl: process.env.DATABASE_URL ?? "mongodb://localhost:27017/transitops",
   frontendUrl: frontendUrls[0],
   frontendUrls,

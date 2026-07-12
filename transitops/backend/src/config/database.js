@@ -21,6 +21,7 @@ export async function connectDatabase() {
     console.log("Database connected");
   } catch (error) {
     console.error(`Database connection failed: ${error.message}`);
+    throw error;
   }
 }
 
