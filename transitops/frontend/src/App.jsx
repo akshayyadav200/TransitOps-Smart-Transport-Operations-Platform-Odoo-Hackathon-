@@ -18,6 +18,7 @@ import { AuthProvider, useAuth } from "./auth/AuthContext.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { ToastProvider, useToast } from "./components/ToastProvider.jsx";
 import { ConfirmDialog, EmptyState, PageHeader, StatusBadge } from "./components/shared.jsx";
+import { FleetWorkspace } from "./features/fleet/FleetWorkspace.jsx";
 import { API_BASE_URL } from "./lib/apiClient.js";
 import { MODULE_PERMISSIONS, canShowNavigationItem } from "./lib/permissions.js";
 import { getDefaultRouteForRole } from "./lib/permissions.js";
@@ -70,6 +71,10 @@ function ModuleView({ moduleName }) {
 
   if (moduleName === "trips" || moduleName === "maintenance") {
     return <OperationsWorkspace mode={moduleName === "maintenance" ? "maintenance" : "trips"} />;
+  }
+
+  if (moduleName === "vehicles" || moduleName === "driverCompliance") {
+    return <FleetWorkspace initialTab={moduleName === "driverCompliance" ? "drivers" : "vehicles"} />;
   }
 
   return (

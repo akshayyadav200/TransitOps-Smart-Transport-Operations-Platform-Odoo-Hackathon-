@@ -43,6 +43,13 @@ async function parseResponse(response) {
 
 export async function apiRequest(path, options = {}) {
   const url = new URL(path.replace(/^\//, ""), `${API_BASE_URL}/`);
+  const { params = {}, ...fetchOptions } = options;
+
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && value !== null && value !== "") {
+      url.searchParams.set(key, value);
+    }
+  }
 
   let response;
 
@@ -51,9 +58,9 @@ export async function apiRequest(path, options = {}) {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        ...(options.headers ?? {})
+        ...(fetchOptions.headers ?? {})
       },
-      ...options
+      ...fetchOptions
     });
   } catch {
     throw new ApiError({

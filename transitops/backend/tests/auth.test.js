@@ -375,3 +375,47 @@ describe("operations route security", () => {
     });
   });
 });
+
+describe("fleet route security", () => {
+  it("rejects unauthenticated vehicle access", async () => {
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/vehicles`);
+      const payload = await response.json();
+
+      assert.equal(response.status, 401);
+      assert.equal(payload.message, "Authentication required");
+    });
+  });
+
+  it("forbids dispatchers from vehicle management routes", async () => {
+    const user = makeUser({ role: ROLES.DISPATCHER });
+    mockFindById(user);
+    const token = signAuthToken(user);
+
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/vehicles`, {
+        headers: {
+          Cookie: `${process.env.AUTH_COOKIE_NAME}=${token}`
+        }
+      });
+
+      assert.equal(response.status, 403);
+    });
+  });
+
+  it("forbids dispatchers from compliance dashboard", async () => {
+    const user = makeUser({ role: ROLES.DISPATCHER });
+    mockFindById(user);
+    const token = signAuthToken(user);
+
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/compliance/drivers`, {
+        headers: {
+          Cookie: `${process.env.AUTH_COOKIE_NAME}=${token}`
+        }
+      });
+
+      assert.equal(response.status, 403);
+    });
+  });
+});

@@ -43,6 +43,11 @@ const vehicleSchema = new mongoose.Schema(
       min: [0, "Odometer cannot be negative"],
       default: 0
     },
+    acquisitionCost: {
+      type: Number,
+      min: [0, "Acquisition cost cannot be negative"],
+      default: 0
+    },
     region: {
       type: String,
       trim: true,
