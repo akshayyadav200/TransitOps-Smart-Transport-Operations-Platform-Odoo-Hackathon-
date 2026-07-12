@@ -51,27 +51,26 @@ Trip:
 - `vehicle`
 - `driver`
 - `cargoWeight`
-- `plannedDistance`
-- `startingOdometer`
-- `finalOdometer`
-- `actualDistance`
-- `fuelConsumed`
+- `distance`
 - `revenue`
+- `fuel`
 - `status`
-- `dispatchDate`
-- `completedDate`
-- `region`
+- `timeline`
+- `dispatchedAt`
+- `completedAt`
+- `cancelledAt`
 
 Maintenance:
 
 - `_id`
 - `vehicle`
-- `serviceType`
+- `title`
 - `description`
 - `cost`
 - `status`
-- `startDate`
-- `endDate`
+- `openedAt`
+- `closedAt`
+- `history`
 
 ## Person 4: Finance And Analytics Modules
 
@@ -84,7 +83,10 @@ FuelLog:
 - `trip`
 - `liters`
 - `cost`
-- `date`
+- `odometer`
+- `filledAt`
+- `vendor`
+- `region`
 
 Expense:
 
@@ -93,4 +95,6 @@ Expense:
 - `trip`
 - `category`
 - `amount`
-- `date`
+- `description`
+- `expenseDate`
+- `region`

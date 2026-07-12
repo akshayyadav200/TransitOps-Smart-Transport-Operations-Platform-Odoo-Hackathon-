@@ -97,7 +97,7 @@ Backend modules must enforce access with `authenticate` and `authorizeRoles(...)
 Role access:
 
 - Admin: full access
-- Fleet Manager: vehicles, maintenance, dashboard, reports
+- Fleet Manager: vehicles, drivers, maintenance, compliance, dashboard, reports
 - Dispatcher: trip creation and dispatch-related operations
 - Safety Officer: driver compliance and safety information
 - Financial Analyst: fuel, expenses, reports and analytics

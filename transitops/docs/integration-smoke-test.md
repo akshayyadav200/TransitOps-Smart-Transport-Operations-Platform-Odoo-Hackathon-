@@ -19,7 +19,7 @@ Use this checklist before merging feature branches into `develop`.
 ## Role Visibility
 
 - Admin sees all core modules.
-- Fleet Manager sees dashboard, vehicles, maintenance, reports.
+- Fleet Manager sees dashboard, vehicles, maintenance, safety/compliance, and reports.
 - Dispatcher sees trips and dispatch-related access.
 - Safety Officer sees driver compliance access.
 - Financial Analyst sees fuel, expenses, analytics, reports, and dashboard where enabled.
@@ -48,5 +48,7 @@ Use this checklist before merging feature branches into `develop`.
 
 - Vehicle: `registrationNumber`, `name`, `model`, `type`, `maximumLoadCapacity`, `odometer`, `acquisitionCost`, `region`, `status`.
 - Driver: `name`, `licenseNumber`, `licenseCategory`, `licenseExpiryDate`, `contactNumber`, `safetyScore`, `region`, `status`.
-- Trip: `tripNumber`, `source`, `destination`, `vehicle`, `driver`, `cargoWeight`, `plannedDistance`, `startingOdometer`, `finalOdometer`, `actualDistance`, `fuelConsumed`, `revenue`, `region`, `status`.
-- Maintenance: `vehicle`, `serviceType`, `description`, `cost`, `status`, `startDate`, `endDate`.
+- Trip: `tripNumber`, `source`, `destination`, `vehicle`, `driver`, `cargoWeight`, `distance`, `revenue`, `fuel`, `status`, `timeline`, `dispatchedAt`, `completedAt`, `cancelledAt`.
+- Maintenance: `vehicle`, `title`, `description`, `cost`, `status`, `openedAt`, `closedAt`, `history`.
+- FuelLog: `vehicle`, `trip`, `liters`, `cost`, `odometer`, `filledAt`, `vendor`, `region`.
+- Expense: `category`, `amount`, `description`, `vehicle`, `trip`, `expenseDate`, `region`.
