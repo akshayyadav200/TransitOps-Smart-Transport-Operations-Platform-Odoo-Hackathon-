@@ -865,6 +865,115 @@ nav {
   font-weight: 900;
 }
 
+.finance-workspace,
+.reports-panel {
+  display: grid;
+  gap: 20px;
+  width: min(1180px, 100%);
+}
+
+.finance-filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  gap: 10px;
+  align-items: end;
+  padding: 14px;
+  border: 1px solid #dce2e5;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.finance-filters label {
+  display: grid;
+  gap: 6px;
+  color: #3c4c53;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.finance-filters input {
+  min-height: 40px;
+  padding: 9px 10px;
+  border: 1px solid #cfd8dc;
+  border-radius: 6px;
+}
+
+.finance-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.finance-card {
+  display: grid;
+  min-height: 132px;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid #dce2e5;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(36, 48, 58, 0.08);
+}
+
+.finance-card svg {
+  color: #266350;
+}
+
+.finance-card span {
+  color: #5a6b70;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.finance-card strong {
+  align-self: end;
+  overflow-wrap: anywhere;
+  font-size: 1.45rem;
+}
+
+.chart-grid,
+.finance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.chart-panel {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid #dce2e5;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.bar-list {
+  display: grid;
+  gap: 10px;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.bar-row div {
+  grid-column: 1 / -1;
+  height: 8px;
+  min-width: 4px;
+  border-radius: 999px;
+  background: #266350;
+}
+
+.export-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -927,7 +1036,11 @@ nav {
   .module-grid,
   .filters,
   .fleet-header,
-  .metric-grid {
+  .metric-grid,
+  .finance-filters,
+  .finance-card-grid,
+  .chart-grid,
+  .finance-grid {
     grid-template-columns: 1fr;
   }
 

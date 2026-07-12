@@ -419,3 +419,31 @@ describe("fleet route security", () => {
     });
   });
 });
+
+describe("finance route security", () => {
+  it("rejects unauthenticated dashboard access", async () => {
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/finance/dashboard`);
+      const payload = await response.json();
+
+      assert.equal(response.status, 401);
+      assert.equal(payload.message, "Authentication required");
+    });
+  });
+
+  it("forbids dispatchers from finance expenses", async () => {
+    const user = makeUser({ role: ROLES.DISPATCHER });
+    mockFindById(user);
+    const token = signAuthToken(user);
+
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/finance/expenses`, {
+        headers: {
+          Cookie: `${process.env.AUTH_COOKIE_NAME}=${token}`
+        }
+      });
+
+      assert.equal(response.status, 403);
+    });
+  });
+});
