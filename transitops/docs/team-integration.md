@@ -4,8 +4,10 @@
 
 - API prefix: `/api`
 - Health endpoint: `GET /api/health`
+- Auth endpoints: `POST /api/auth/login`, `GET /api/auth/me`, `POST /api/auth/logout`
 - Response convention: `{ success, message, data }` or `{ success, message, errors }`
 - Shared constants live in `backend/src/constants/enums.js`
+- Use `authenticate` and `authorizeRoles(...)` for protected backend routes.
 
 ## Person 2: Fleet And Driver Modules
 

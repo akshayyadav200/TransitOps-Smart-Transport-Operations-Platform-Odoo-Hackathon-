@@ -1,4 +1,12 @@
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5000/api";
+function defaultApiBaseUrl() {
+  if (typeof window === "undefined") {
+    return "http://localhost:5000/api";
+  }
+
+  return `${window.location.protocol}//${window.location.hostname}:5000/api`;
+}
+
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? defaultApiBaseUrl();
 
 async function parseResponse(response) {
   const payload = await response.json().catch(() => null);
@@ -15,6 +23,7 @@ export async function apiRequest(path, options = {}) {
   const url = new URL(path.replace(/^\//, ""), `${API_BASE_URL}/`);
 
   const response = await fetch(url, {
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       ...(options.headers ?? {})
