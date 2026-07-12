@@ -9,6 +9,7 @@ export default [
       sourceType: "module",
       globals: {
         Buffer: "readonly",
+        URL: "readonly",
         console: "readonly",
         fetch: "readonly",
         process: "readonly"

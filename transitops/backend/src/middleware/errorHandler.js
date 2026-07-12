@@ -10,6 +10,22 @@ function formatValidationErrors(error) {
 }
 
 function normalizeError(error) {
+  if (error instanceof SyntaxError && error.status === 400 && "body" in error) {
+    return {
+      statusCode: 400,
+      message: "Malformed JSON request body",
+      errors: []
+    };
+  }
+
+  if (error?.type === "entity.too.large") {
+    return {
+      statusCode: 413,
+      message: "Request body is too large",
+      errors: []
+    };
+  }
+
   if (error instanceof mongoose.Error.ValidationError) {
     return {
       statusCode: 400,

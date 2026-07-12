@@ -204,13 +204,90 @@ describe("authentication routes", () => {
   });
 
   it("clears the auth cookie on logout", async () => {
+    const user = makeUser();
+    mockFindById(user);
+    const token = signAuthToken(user);
+
     await withServer(async (baseUrl) => {
-      const response = await postJson(baseUrl, "/api/auth/logout", {});
+      const response = await postJson(
+        baseUrl,
+        "/api/auth/logout",
+        {},
+        {
+          Cookie: `${process.env.AUTH_COOKIE_NAME}=${token}`
+        }
+      );
       const payload = await response.json();
 
       assert.equal(response.status, 200);
       assert.equal(payload.message, "Logout successful");
       assert.match(response.headers.get("set-cookie"), /transitops_test_session=/);
+    });
+  });
+
+  it("rejects logout without a valid session", async () => {
+    await withServer(async (baseUrl) => {
+      const response = await postJson(baseUrl, "/api/auth/logout", {});
+      const payload = await response.json();
+
+      assert.equal(response.status, 401);
+      assert.equal(payload.message, "Authentication required");
+    });
+  });
+});
+
+describe("API hardening", () => {
+  it("handles malformed JSON consistently", async () => {
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: "{"
+      });
+      const payload = await response.json();
+
+      assert.equal(response.status, 400);
+      assert.equal(payload.success, false);
+      assert.equal(payload.message, "Malformed JSON request body");
+    });
+  });
+
+  it("rejects oversized request bodies", async () => {
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email: "admin@transitops.demo", password: "Password@123", padding: "x".repeat(110_000) })
+      });
+      const payload = await response.json();
+
+      assert.equal(response.status, 413);
+      assert.equal(payload.success, false);
+      assert.equal(payload.message, "Request body is too large");
+    });
+  });
+
+  it("returns a consistent route-not-found error", async () => {
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/missing-route`);
+      const payload = await response.json();
+
+      assert.equal(response.status, 404);
+      assert.equal(payload.success, false);
+      assert.equal(payload.message, "Route not found: /api/missing-route");
+    });
+  });
+
+  it("adds general rate limit headers", async () => {
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/health`);
+
+      assert.equal(response.status, 200);
+      assert.equal(response.headers.has("ratelimit-limit"), true);
     });
   });
 });

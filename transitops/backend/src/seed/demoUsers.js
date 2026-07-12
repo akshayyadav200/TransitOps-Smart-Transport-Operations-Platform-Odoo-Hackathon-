@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { connectDatabase } from "../config/database.js";
-import { env } from "../config/env.js";
+import { env, validateEnvironment } from "../config/env.js";
 import { ROLES } from "../constants/enums.js";
 import { User } from "../models/User.js";
 
@@ -42,6 +42,7 @@ async function seedDemoUsers() {
 }
 
 try {
+  validateEnvironment();
   await seedDemoUsers();
 } finally {
   await mongoose.connection.close(false);

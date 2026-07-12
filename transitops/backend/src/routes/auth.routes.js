@@ -19,4 +19,4 @@ const loginLimiter = rateLimit({
 
 authRouter.post("/login", loginLimiter, login);
 authRouter.get("/me", authenticate, me);
-authRouter.post("/logout", logout);
+authRouter.post("/logout", authenticate, logout);

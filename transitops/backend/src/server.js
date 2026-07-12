@@ -2,8 +2,9 @@ import { createServer } from "node:http";
 import mongoose from "mongoose";
 import { createApp } from "./app.js";
 import { connectDatabase } from "./config/database.js";
-import { env } from "./config/env.js";
+import { env, validateEnvironment } from "./config/env.js";
 
+validateEnvironment();
 const app = createApp();
 const server = createServer(app);
 
