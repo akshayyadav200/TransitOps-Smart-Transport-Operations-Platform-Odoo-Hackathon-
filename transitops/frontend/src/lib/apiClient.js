@@ -6,14 +6,36 @@ function defaultApiBaseUrl() {
   return `${window.location.protocol}//${window.location.hostname}:5000/api`;
 }
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? defaultApiBaseUrl();
+export const API_BASE_URL = import.meta.env?.VITE_API_BASE_URL ?? defaultApiBaseUrl();
+
+export class ApiError extends Error {
+  constructor({ errors = [], message = "Request failed", status = 500 } = {}) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.errors = errors;
+  }
+}
+
+function notifyAuthExpired() {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new window.CustomEvent("transitops:auth-expired"));
+  }
+}
 
 async function parseResponse(response) {
   const payload = await response.json().catch(() => null);
 
   if (!response.ok) {
-    const message = payload?.message ?? "Request failed";
-    throw new Error(message);
+    if (response.status === 401) {
+      notifyAuthExpired();
+    }
+
+    throw new ApiError({
+      errors: payload?.errors ?? [],
+      message: payload?.message ?? (response.status === 403 ? "You do not have permission to perform this action" : "Request failed"),
+      status: response.status
+    });
   }
 
   return payload;
@@ -22,14 +44,23 @@ async function parseResponse(response) {
 export async function apiRequest(path, options = {}) {
   const url = new URL(path.replace(/^\//, ""), `${API_BASE_URL}/`);
 
-  const response = await fetch(url, {
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers ?? {})
-    },
-    ...options
-  });
+  let response;
+
+  try {
+    response = await fetch(url, {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        ...(options.headers ?? {})
+      },
+      ...options
+    });
+  } catch {
+    throw new ApiError({
+      message: "Network request failed. Check that the backend is running, then retry.",
+      status: 0
+    });
+  }
 
   return parseResponse(response);
 }

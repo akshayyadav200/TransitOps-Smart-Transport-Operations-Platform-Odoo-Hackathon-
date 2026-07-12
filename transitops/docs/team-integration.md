@@ -17,7 +17,8 @@ Vehicle:
 
 - `_id`
 - `registrationNumber`
-- `name/model`
+- `name`
+- `model`
 - `type`
 - `maximumLoadCapacity`
 - `odometer`
@@ -66,6 +67,7 @@ Maintenance:
 - `_id`
 - `vehicle`
 - `serviceType`
+- `description`
 - `cost`
 - `status`
 - `startDate`

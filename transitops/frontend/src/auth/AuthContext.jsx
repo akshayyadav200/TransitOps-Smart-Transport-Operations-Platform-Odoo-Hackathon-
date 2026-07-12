@@ -33,6 +33,15 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
+  useEffect(() => {
+    function handleAuthExpired() {
+      setUser(null);
+    }
+
+    window.addEventListener("transitops:auth-expired", handleAuthExpired);
+    return () => window.removeEventListener("transitops:auth-expired", handleAuthExpired);
+  }, []);
+
   async function login(email, password) {
     const payload = await apiClient.post("/auth/login", { email, password });
     setUser(payload.data.user);
@@ -50,6 +59,7 @@ export function AuthProvider({ children }) {
       loading,
       login,
       logout,
+      clearSession: () => setUser(null),
       isAuthenticated: Boolean(user)
     }),
     [user, loading]

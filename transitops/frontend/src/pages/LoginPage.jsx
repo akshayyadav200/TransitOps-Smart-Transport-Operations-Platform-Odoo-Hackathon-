@@ -2,6 +2,8 @@ import { LockKeyhole } from "lucide-react";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext.jsx";
+import { FormError } from "../components/shared.jsx";
+import { getDefaultRouteForRole } from "../lib/permissions.js";
 import { useNavigation } from "../routing/NavigationContext.jsx";
 
 export function LoginPage() {
@@ -9,25 +11,25 @@ export function LoginPage() {
   const { navigate } = useNavigation();
   const [email, setEmail] = useState("admin@transitops.demo");
   const [password, setPassword] = useState("TransitOpsDemo@123");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (user) {
-      navigate("/dashboard", { replace: true });
+      navigate(getDefaultRouteForRole(user.role), { replace: true });
     }
   }, [navigate, user]);
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setError("");
+    setError(null);
     setSubmitting(true);
 
     try {
-      await login(email, password);
-      navigate("/dashboard", { replace: true });
+      const loggedInUser = await login(email, password);
+      navigate(getDefaultRouteForRole(loggedInUser.role), { replace: true });
     } catch (loginError) {
-      setError(loginError.message);
+      setError(loginError);
     } finally {
       setSubmitting(false);
     }
@@ -56,7 +58,7 @@ export function LoginPage() {
               value={password}
             />
           </label>
-          {error ? <p className="form-error">{error}</p> : null}
+          <FormError errors={error?.errors} message={error?.message} />
           <button disabled={submitting} type="submit">
             {submitting ? "Signing in..." : "Sign in"}
           </button>

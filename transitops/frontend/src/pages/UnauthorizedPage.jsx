@@ -1,18 +1,18 @@
-import { ShieldX } from "lucide-react";
 import React from "react";
+import { useAuth } from "../auth/AuthContext.jsx";
+import { ErrorState } from "../components/shared.jsx";
+import { getDefaultRouteForRole } from "../lib/permissions.js";
 import { useNavigation } from "../routing/NavigationContext.jsx";
 
 export function UnauthorizedPage() {
+  const { user } = useAuth();
   const { navigate } = useNavigation();
 
   return (
-    <section className="state-page">
-      <ShieldX size={36} aria-hidden="true" />
-      <h1>Unauthorized</h1>
-      <p>Your current role does not have access to this workspace.</p>
-      <button onClick={() => navigate("/dashboard")} type="button">
-        Back to dashboard
-      </button>
-    </section>
+    <ErrorState
+      message="Your current role does not have access to this workspace."
+      onRetry={() => navigate(getDefaultRouteForRole(user?.role))}
+      title="Unauthorized"
+    />
   );
 }
