@@ -1,3 +1,5 @@
+import React from "react";
+
 export function Pagination({ pagination, onPageChange }) {
   if (!pagination) {
     return null;
@@ -29,4 +31,3 @@ export function Pagination({ pagination, onPageChange }) {
     </div>
   );
 }
-

@@ -1,3 +1,4 @@
+import React from "react";
 import { DRIVER_STATUSES, LICENSE_CATEGORIES } from "../constants.js";
 
 const EMPTY_DRIVER = {
@@ -92,4 +93,3 @@ function dateInputValue(value) {
 
   return new Date(value).toISOString().slice(0, 10);
 }
-

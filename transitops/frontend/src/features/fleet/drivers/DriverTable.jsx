@@ -1,3 +1,4 @@
+import React from "react";
 import { StatusBadge } from "../../../components/common/StatusBadge.jsx";
 import { formatDate } from "../formatters.js";
 

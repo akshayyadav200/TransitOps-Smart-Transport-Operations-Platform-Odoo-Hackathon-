@@ -1,5 +1,5 @@
 import { CarFront, ClipboardCheck, UserRound } from "lucide-react";
-import { createElement } from "react";
+import React, { createElement } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../auth/AuthContext.jsx";
 import { ComplianceView } from "./compliance/ComplianceView.jsx";
@@ -17,6 +17,10 @@ export function FleetWorkspace({ initialTab = "vehicles" }) {
   const [activeTab, setActiveTab] = useState(initialTab);
   const visibleTabs = useMemo(() => TABS.filter(([, , , roles]) => roles.includes(user.role)), [user.role]);
   const canManageDrivers = ["Admin", "Fleet Manager"].includes(user.role);
+
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
 
   useEffect(() => {
     if (!visibleTabs.some(([key]) => key === activeTab)) {

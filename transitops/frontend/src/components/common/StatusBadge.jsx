@@ -1,3 +1,5 @@
+import React from "react";
+
 const STATUS_STYLES = {
   Available: "badge badge-success",
   "On Trip": "badge badge-info",
@@ -10,4 +12,3 @@ const STATUS_STYLES = {
 export function StatusBadge({ value }) {
   return <span className={STATUS_STYLES[value] ?? "badge badge-muted"}>{value}</span>;
 }
-

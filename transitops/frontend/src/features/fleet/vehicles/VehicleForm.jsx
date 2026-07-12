@@ -1,3 +1,4 @@
+import React from "react";
 import { VEHICLE_STATUSES, VEHICLE_TYPES } from "../constants.js";
 
 const EMPTY_VEHICLE = {
@@ -95,4 +96,3 @@ export function VehicleForm({ editingVehicle, errors, onCancel, onChange, onSubm
 export function newVehicle() {
   return { ...EMPTY_VEHICLE };
 }
-

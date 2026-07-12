@@ -1,3 +1,4 @@
+import React from "react";
 import { StatusBadge } from "../../../components/common/StatusBadge.jsx";
 import { formatCurrency, formatNumber } from "../formatters.js";
 
@@ -66,4 +67,3 @@ export function VehicleTable({ items, loading, onEdit, onRetire, onSort }) {
     </div>
   );
 }
-

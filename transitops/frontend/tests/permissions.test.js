@@ -25,6 +25,7 @@ describe("frontend permissions", () => {
   it("centralizes navigation and action visibility", () => {
     const user = { role: ROLES.FLEET_MANAGER };
     assert.equal(canShowNavigationItem(user, { module: "maintenance" }), true);
+    assert.equal(canShowNavigationItem(user, { module: "driverCompliance" }), true);
     assert.equal(canShowNavigationItem(user, { module: "trips" }), false);
     assert.equal(canPerformAction(user, [ROLES.ADMIN, ROLES.FLEET_MANAGER]), true);
   });

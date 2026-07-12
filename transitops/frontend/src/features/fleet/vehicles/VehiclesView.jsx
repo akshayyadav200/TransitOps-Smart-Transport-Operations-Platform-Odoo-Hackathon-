@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Pagination } from "../../../components/common/Pagination.jsx";
 import { fieldErrors } from "../formatters.js";
 import { vehicleApi } from "../fleetApi.js";
@@ -82,4 +82,3 @@ export function VehiclesView() {
     </section>
   );
 }
-

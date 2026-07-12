@@ -75,7 +75,7 @@ function ModuleView({ moduleName }) {
   }
 
   if (moduleName === "vehicles" || moduleName === "driverCompliance") {
-    return <FleetWorkspace initialTab={moduleName === "driverCompliance" ? "drivers" : "vehicles"} />;
+    return <FleetWorkspace initialTab={moduleName === "driverCompliance" ? "compliance" : "vehicles"} />;
   }
 
   if (["dashboard", "analytics", "reports", "fuel", "expenses"].includes(moduleName)) {

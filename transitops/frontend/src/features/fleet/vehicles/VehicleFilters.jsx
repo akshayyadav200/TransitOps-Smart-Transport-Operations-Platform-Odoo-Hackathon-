@@ -1,3 +1,4 @@
+import React from "react";
 import { VEHICLE_STATUSES, VEHICLE_TYPES } from "../constants.js";
 
 export function VehicleFilters({ filters, onFilter }) {
@@ -30,4 +31,3 @@ export function VehicleFilters({ filters, onFilter }) {
     </div>
   );
 }
-
