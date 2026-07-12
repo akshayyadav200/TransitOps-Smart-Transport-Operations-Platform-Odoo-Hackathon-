@@ -1,0 +1,92 @@
+# Team Integration
+
+## Shared Backend Foundation
+
+- API prefix: `/api`
+- Health endpoint: `GET /api/health`
+- Response convention: `{ success, message, data }` or `{ success, message, errors }`
+- Shared constants live in `backend/src/constants/enums.js`
+
+## Person 2: Fleet And Driver Modules
+
+Use these shared fields.
+
+Vehicle:
+
+- `_id`
+- `registrationNumber`
+- `name/model`
+- `type`
+- `maximumLoadCapacity`
+- `odometer`
+- `acquisitionCost`
+- `region`
+- `status`
+
+Driver:
+
+- `_id`
+- `name`
+- `licenseNumber`
+- `licenseCategory`
+- `licenseExpiryDate`
+- `contactNumber`
+- `safetyScore`
+- `region`
+- `status`
+
+## Person 3: Dispatch And Maintenance Modules
+
+Use these shared fields.
+
+Trip:
+
+- `_id`
+- `tripNumber`
+- `source`
+- `destination`
+- `vehicle`
+- `driver`
+- `cargoWeight`
+- `plannedDistance`
+- `startingOdometer`
+- `finalOdometer`
+- `actualDistance`
+- `fuelConsumed`
+- `revenue`
+- `status`
+- `dispatchDate`
+- `completedDate`
+- `region`
+
+Maintenance:
+
+- `_id`
+- `vehicle`
+- `serviceType`
+- `cost`
+- `status`
+- `startDate`
+- `endDate`
+
+## Person 4: Finance And Analytics Modules
+
+Use these shared fields.
+
+FuelLog:
+
+- `_id`
+- `vehicle`
+- `trip`
+- `liters`
+- `cost`
+- `date`
+
+Expense:
+
+- `_id`
+- `vehicle`
+- `trip`
+- `category`
+- `amount`
+- `date`
