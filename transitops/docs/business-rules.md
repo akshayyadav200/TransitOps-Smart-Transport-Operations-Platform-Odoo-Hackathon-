@@ -23,3 +23,19 @@
 - Driver statuses: Available, On Trip, Off Duty, Suspended.
 - Trip statuses: Draft, Dispatched, Completed, Cancelled.
 - Maintenance statuses: Active, Completed, Cancelled.
+
+## Business Intelligence Rules
+
+- Fuel records must belong to a valid vehicle.
+- Fuel records may belong to a valid trip.
+- Fuel liters and fuel cost must be greater than zero.
+- Fuel odometer cannot be negative.
+- Expenses must belong to a valid vehicle.
+- Expenses may belong to a valid trip.
+- Expense amount must be greater than zero.
+- Expense categories: Fuel, Maintenance, Repair, Insurance, Parking, Toll, Miscellaneous.
+- Fuel types: Diesel, Petrol, CNG, Electric, Hybrid, Other.
+- Operational Cost = Fuel Cost + Maintenance Cost + Other Expenses.
+- Fuel Efficiency = Distance / Fuel Consumed.
+- Fleet Utilization = On Trip Vehicles / Total Vehicles x 100.
+- ROI = (Revenue - Fuel Cost - Maintenance Cost - Other Expenses) / Vehicle Acquisition Cost x 100.

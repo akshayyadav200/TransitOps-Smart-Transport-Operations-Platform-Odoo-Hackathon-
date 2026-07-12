@@ -53,9 +53,19 @@ export const LICENSE_CATEGORIES = Object.freeze({
 export const EXPENSE_CATEGORIES = Object.freeze({
   FUEL: "Fuel",
   MAINTENANCE: "Maintenance",
-  TOLL: "Toll",
+  REPAIR: "Repair",
   INSURANCE: "Insurance",
-  PERMIT: "Permit",
+  PARKING: "Parking",
+  TOLL: "Toll",
+  MISCELLANEOUS: "Miscellaneous"
+});
+
+export const FUEL_TYPES = Object.freeze({
+  DIESEL: "Diesel",
+  PETROL: "Petrol",
+  CNG: "CNG",
+  ELECTRIC: "Electric",
+  HYBRID: "Hybrid",
   OTHER: "Other"
 });
 
@@ -67,3 +77,4 @@ export const maintenanceStatusValues = Object.freeze(Object.values(MAINTENANCE_S
 export const vehicleTypeValues = Object.freeze(Object.values(VEHICLE_TYPES));
 export const licenseCategoryValues = Object.freeze(Object.values(LICENSE_CATEGORIES));
 export const expenseCategoryValues = Object.freeze(Object.values(EXPENSE_CATEGORIES));
+export const fuelTypeValues = Object.freeze(Object.values(FUEL_TYPES));

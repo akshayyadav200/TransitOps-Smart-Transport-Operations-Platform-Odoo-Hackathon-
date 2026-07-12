@@ -76,3 +76,72 @@ Maintenance statuses:
 - Active
 - Completed
 - Cancelled
+
+Fuel types:
+
+- Diesel
+- Petrol
+- CNG
+- Electric
+- Hybrid
+- Other
+
+Expense categories:
+
+- Fuel
+- Maintenance
+- Repair
+- Insurance
+- Parking
+- Toll
+- Miscellaneous
+
+## Business Intelligence Endpoints
+
+Fuel:
+
+- `POST /api/fuel`
+- `GET /api/fuel`
+- `GET /api/fuel/:id`
+- `PUT /api/fuel/:id`
+- `DELETE /api/fuel/:id`
+- `GET /api/fuel/history`
+- `GET /api/fuel/vehicle-wise`
+- `GET /api/fuel/trip-wise`
+
+Expenses:
+
+- `POST /api/expenses`
+- `GET /api/expenses`
+- `GET /api/expenses/:id`
+- `PUT /api/expenses/:id`
+- `DELETE /api/expenses/:id`
+- `GET /api/expenses/categories`
+- `GET /api/expenses/vehicle-wise`
+
+Analytics and reports:
+
+- `GET /api/analytics/summary`
+- `GET /api/reports/vehicles`
+- `GET /api/reports/trips`
+- `GET /api/reports/fuel`
+- `GET /api/reports/expenses`
+- `GET /api/reports/costs`
+- `GET /api/reports/roi`
+- `GET /api/reports/filters`
+
+Supported shared query params:
+
+- `page`
+- `limit`
+- `search`
+- `sort`
+- `vehicleId`
+- `tripId`
+- `driverId`
+- `region`
+- `status`
+- `startDate`
+- `endDate`
+- `category`
+- `fuelType`

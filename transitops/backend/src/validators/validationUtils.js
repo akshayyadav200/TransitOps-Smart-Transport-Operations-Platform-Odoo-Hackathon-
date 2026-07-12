@@ -28,6 +28,14 @@ export function optionalString(value) {
   return String(value).trim();
 }
 
+export function optionalTrimmedString(value) {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  return String(value).trim();
+}
+
 export function requiredNumber(value, field, errors) {
   const numberValue = Number(value);
 
@@ -65,6 +73,21 @@ export function requiredDate(value, field, errors) {
   return dateValue;
 }
 
+export function optionalDate(value, field, errors) {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  const dateValue = new Date(value);
+
+  if (Number.isNaN(dateValue.getTime())) {
+    errors.push({ field, message: `${field} must be a valid date` });
+    return undefined;
+  }
+
+  return dateValue;
+}
+
 export function enumValue(value, field, allowedValues, errors) {
   if (!allowedValues.includes(value)) {
     errors.push({ field, message: `${field} must be one of: ${allowedValues.join(", ")}` });
@@ -74,3 +97,27 @@ export function enumValue(value, field, allowedValues, errors) {
   return value;
 }
 
+export function optionalEnumValue(value, field, allowedValues, errors) {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  return enumValue(value, field, allowedValues, errors);
+}
+
+export function requiredObjectId(value, field, errors) {
+  if (typeof value !== "string" || !/^[a-f\d]{24}$/i.test(value.trim())) {
+    errors.push({ field, message: `${field} must be a valid MongoDB ObjectId` });
+    return null;
+  }
+
+  return value.trim();
+}
+
+export function optionalObjectId(value, field, errors) {
+  if (value === undefined || value === null || value === "") {
+    return null;
+  }
+
+  return requiredObjectId(value, field, errors);
+}

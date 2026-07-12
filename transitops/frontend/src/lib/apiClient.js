@@ -1,63 +1,50 @@
+import axios from "axios";
+
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5000/api";
 
-function buildUrl(path, params) {
-  const url = new URL(path.replace(/^\//, ""), `${API_BASE_URL}/`);
-
-  Object.entries(params ?? {}).forEach(([key, value]) => {
-    if (value !== undefined && value !== null && value !== "") {
-      url.searchParams.set(key, value);
-    }
-  });
-
-  return url;
-}
-
-async function parseResponse(response) {
-  const payload = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    const message = payload?.message ?? "Request failed";
-    const error = new Error(message);
-    error.errors = payload?.errors ?? [];
-    throw error;
+const http = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json"
   }
+});
 
-  return payload;
+function normalizeError(error) {
+  const payload = error.response?.data;
+  const normalized = new Error(payload?.message ?? error.message ?? "Request failed");
+  normalized.errors = payload?.errors ?? [];
+  normalized.statusCode = error.response?.status;
+  return normalized;
 }
 
 export async function apiRequest(path, options = {}) {
-  const url = buildUrl(path, options.params);
-
-  const response = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers ?? {})
-    },
-    ...options
-  });
-
-  return parseResponse(response);
+  try {
+    const response = await http.request({ url: path, ...options });
+    return response.data;
+  } catch (error) {
+    throw normalizeError(error);
+  }
 }
 
 export const apiClient = {
   get: (path, options) => apiRequest(path, { ...options, method: "GET" }),
-  post: (path, body, options) =>
+  post: (path, data, options) =>
     apiRequest(path, {
       ...options,
       method: "POST",
-      body: JSON.stringify(body)
+      data
     }),
-  put: (path, body, options) =>
+  put: (path, data, options) =>
     apiRequest(path, {
       ...options,
       method: "PUT",
-      body: JSON.stringify(body)
+      data
     }),
-  patch: (path, body, options) =>
+  patch: (path, data, options) =>
     apiRequest(path, {
       ...options,
       method: "PATCH",
-      body: JSON.stringify(body ?? {})
+      data: data ?? {}
     }),
   delete: (path, options) => apiRequest(path, { ...options, method: "DELETE" })
 };
