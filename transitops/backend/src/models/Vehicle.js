@@ -78,9 +78,7 @@ vehicleSchema.virtual("dispatchEligible").get(function dispatchEligible() {
   return this.status === VEHICLE_STATUSES.AVAILABLE;
 });
 
-vehicleSchema.index({ registrationNumber: 1 }, { unique: true });
 vehicleSchema.index({ name: "text", model: "text", registrationNumber: "text", region: "text" });
 vehicleSchema.index({ status: 1, type: 1, region: 1 });
 
 export const Vehicle = mongoose.models.Vehicle ?? mongoose.model("Vehicle", vehicleSchema);
-

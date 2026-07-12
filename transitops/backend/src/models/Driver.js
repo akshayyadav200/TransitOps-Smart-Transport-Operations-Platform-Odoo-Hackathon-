@@ -87,9 +87,7 @@ driverSchema.virtual("dispatchEligible").get(function dispatchEligible() {
   return this.status === DRIVER_STATUSES.AVAILABLE && !this.licenseExpired;
 });
 
-driverSchema.index({ licenseNumber: 1 }, { unique: true });
 driverSchema.index({ name: "text", licenseNumber: "text", contactNumber: "text", region: "text" });
 driverSchema.index({ status: 1, licenseCategory: 1, region: 1 });
 
 export const Driver = mongoose.models.Driver ?? mongoose.model("Driver", driverSchema);
-
