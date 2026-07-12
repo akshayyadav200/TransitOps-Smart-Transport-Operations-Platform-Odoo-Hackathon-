@@ -37,7 +37,17 @@ export const VEHICLE_TYPES = Object.freeze({
   TRUCK: "Truck",
   VAN: "Van",
   BUS: "Bus",
-  TRAILER: "Trailer"
+  TRAILER: "Trailer",
+  TANKER: "Tanker",
+  OTHER: "Other"
+});
+
+export const LICENSE_CATEGORIES = Object.freeze({
+  LIGHT: "Light",
+  HEAVY: "Heavy",
+  COMMERCIAL: "Commercial",
+  HAZMAT: "Hazmat",
+  PASSENGER: "Passenger"
 });
 
 export const EXPENSE_CATEGORIES = Object.freeze({
@@ -55,4 +65,5 @@ export const driverStatusValues = Object.freeze(Object.values(DRIVER_STATUSES));
 export const tripStatusValues = Object.freeze(Object.values(TRIP_STATUSES));
 export const maintenanceStatusValues = Object.freeze(Object.values(MAINTENANCE_STATUSES));
 export const vehicleTypeValues = Object.freeze(Object.values(VEHICLE_TYPES));
+export const licenseCategoryValues = Object.freeze(Object.values(LICENSE_CATEGORIES));
 export const expenseCategoryValues = Object.freeze(Object.values(EXPENSE_CATEGORIES));

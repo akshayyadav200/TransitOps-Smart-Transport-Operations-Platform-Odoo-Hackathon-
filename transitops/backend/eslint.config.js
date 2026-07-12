@@ -8,7 +8,10 @@ export default [
       ecmaVersion: "latest",
       sourceType: "module",
       globals: {
+        Buffer: "readonly",
+        URL: "readonly",
         console: "readonly",
+        fetch: "readonly",
         process: "readonly"
       }
     },

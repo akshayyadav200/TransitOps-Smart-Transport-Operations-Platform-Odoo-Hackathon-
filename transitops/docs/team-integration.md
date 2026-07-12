@@ -4,8 +4,10 @@
 
 - API prefix: `/api`
 - Health endpoint: `GET /api/health`
+- Auth endpoints: `POST /api/auth/login`, `GET /api/auth/me`, `POST /api/auth/logout`
 - Response convention: `{ success, message, data }` or `{ success, message, errors }`
 - Shared constants live in `backend/src/constants/enums.js`
+- Use `authenticate` and `authorizeRoles(...)` for protected backend routes.
 
 ## Person 2: Fleet And Driver Modules
 
@@ -15,7 +17,8 @@ Vehicle:
 
 - `_id`
 - `registrationNumber`
-- `name/model`
+- `name`
+- `model`
 - `type`
 - `maximumLoadCapacity`
 - `odometer`
@@ -48,26 +51,26 @@ Trip:
 - `vehicle`
 - `driver`
 - `cargoWeight`
-- `plannedDistance`
-- `startingOdometer`
-- `finalOdometer`
-- `actualDistance`
-- `fuelConsumed`
+- `distance`
 - `revenue`
+- `fuel`
 - `status`
-- `dispatchDate`
-- `completedDate`
-- `region`
+- `timeline`
+- `dispatchedAt`
+- `completedAt`
+- `cancelledAt`
 
 Maintenance:
 
 - `_id`
 - `vehicle`
-- `serviceType`
+- `title`
+- `description`
 - `cost`
 - `status`
-- `startDate`
-- `endDate`
+- `openedAt`
+- `closedAt`
+- `history`
 
 ## Person 4: Finance And Analytics Modules
 
@@ -80,7 +83,10 @@ FuelLog:
 - `trip`
 - `liters`
 - `cost`
-- `date`
+- `odometer`
+- `filledAt`
+- `vendor`
+- `region`
 
 Expense:
 
@@ -89,4 +95,6 @@ Expense:
 - `trip`
 - `category`
 - `amount`
-- `date`
+- `description`
+- `expenseDate`
+- `region`

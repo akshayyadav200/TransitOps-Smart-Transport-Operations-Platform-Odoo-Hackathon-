@@ -40,6 +40,68 @@ Returns:
 - `database.state`
 - `timestamp`
 
+## Authentication
+
+`POST /api/auth/login`
+
+Request:
+
+```json
+{
+  "email": "admin@transitops.demo",
+  "password": "TransitOpsDemo@123"
+}
+```
+
+Success response sets an HttpOnly auth cookie and returns safe user fields only:
+
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "id": "user-id",
+      "name": "Admin Demo",
+      "email": "admin@transitops.demo",
+      "role": "Admin",
+      "region": null,
+      "isActive": true
+    }
+  }
+}
+```
+
+Invalid login responses use a generic message:
+
+```json
+{
+  "success": false,
+  "message": "Invalid email or password",
+  "errors": []
+}
+```
+
+`GET /api/auth/me`
+
+Requires the auth cookie or a bearer token. Returns the current active user.
+
+`POST /api/auth/logout`
+
+Clears the auth cookie.
+
+## Authorization
+
+Backend modules must enforce access with `authenticate` and `authorizeRoles(...)`.
+
+Role access:
+
+- Admin: full access
+- Fleet Manager: vehicles, drivers, maintenance, compliance, dashboard, reports
+- Dispatcher: trip creation and dispatch-related operations
+- Safety Officer: driver compliance and safety information
+- Financial Analyst: fuel, expenses, reports and analytics
+
 ## Shared Status Values
 
 Roles:

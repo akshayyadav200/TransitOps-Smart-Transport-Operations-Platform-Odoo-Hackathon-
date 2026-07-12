@@ -7,14 +7,21 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
+    "seed:demo": "node src/seed/demoUsers.js",
+    "seed:demo-users": "node src/seed/demoUsers.js",
     "lint": "eslint .",
-    "build": "node --check src/server.js && node --check src/app.js && node --check src/models/User.js",
+    "build": "node --check src/server.js && node --check src/app.js && node --check src/models/User.js && node --check src/models/Vehicle.js && node --check src/models/Driver.js && node --check src/models/Trip.js && node --check src/models/Maintenance.js && node --check src/models/FuelLog.js && node --check src/models/Expense.js && node --check src/controllers/auth.controller.js && node --check src/controllers/trip.controller.js && node --check src/controllers/maintenance.controller.js && node --check src/controllers/vehicleController.js && node --check src/controllers/driverController.js && node --check src/controllers/complianceController.js && node --check src/controllers/finance.controller.js && node --check src/middleware/authMiddleware.js && node --check src/services/operationsService.js && node --check src/services/vehicleService.js && node --check src/services/driverService.js && node --check src/services/complianceService.js && node --check src/services/financeService.js && node --check src/seed/demoUsers.js",
     "test": "node --test tests/*.test.js"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "express-rate-limit": "^8.5.2",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^8.9.5"
   },
   "devDependencies": {
