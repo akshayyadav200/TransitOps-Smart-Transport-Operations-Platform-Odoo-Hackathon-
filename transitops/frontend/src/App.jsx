@@ -24,6 +24,7 @@ import { getDefaultRouteForRole } from "./lib/permissions.js";
 import { formatDate, safeValue } from "./lib/formatters.js";
 import { LoginPage } from "./pages/LoginPage.jsx";
 import { NotFoundPage } from "./pages/NotFoundPage.jsx";
+import { OperationsWorkspace } from "./features/operations/OperationsWorkspace.jsx";
 import { UnauthorizedPage } from "./pages/UnauthorizedPage.jsx";
 import { NavigationProvider, useNavigation } from "./routing/NavigationContext.jsx";
 
@@ -66,6 +67,10 @@ const moduleDescriptions = {
 function ModuleView({ moduleName }) {
   const { user } = useAuth();
   const title = navigationItems.find((item) => item.module === moduleName)?.label ?? "Dashboard";
+
+  if (moduleName === "trips" || moduleName === "maintenance") {
+    return <OperationsWorkspace mode={moduleName === "maintenance" ? "maintenance" : "trips"} />;
+  }
 
   return (
     <section className="module-view">

@@ -9,7 +9,7 @@
     "start": "node src/server.js",
     "seed:demo-users": "node src/seed/demoUsers.js",
     "lint": "eslint .",
-    "build": "node --check src/server.js && node --check src/app.js && node --check src/models/User.js && node --check src/controllers/auth.controller.js && node --check src/middleware/authMiddleware.js && node --check src/seed/demoUsers.js",
+    "build": "node --check src/server.js && node --check src/app.js && node --check src/models/User.js && node --check src/models/Vehicle.js && node --check src/models/Driver.js && node --check src/models/Trip.js && node --check src/models/Maintenance.js && node --check src/controllers/auth.controller.js && node --check src/controllers/trip.controller.js && node --check src/controllers/maintenance.controller.js && node --check src/middleware/authMiddleware.js && node --check src/services/operationsService.js && node --check src/seed/demoUsers.js",
     "test": "node --test tests/*.test.js"
   },
   "dependencies": {

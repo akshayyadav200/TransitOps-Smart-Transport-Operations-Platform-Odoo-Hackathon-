@@ -331,3 +331,47 @@ describe("RBAC middleware", () => {
     assert.equal(res.payload.success, false);
   });
 });
+
+describe("operations route security", () => {
+  it("rejects unauthenticated trip access", async () => {
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/trips`);
+      const payload = await response.json();
+
+      assert.equal(response.status, 401);
+      assert.equal(payload.message, "Authentication required");
+    });
+  });
+
+  it("forbids fleet managers from dispatch routes", async () => {
+    const user = makeUser({ role: ROLES.FLEET_MANAGER });
+    mockFindById(user);
+    const token = signAuthToken(user);
+
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/trips`, {
+        headers: {
+          Cookie: `${process.env.AUTH_COOKIE_NAME}=${token}`
+        }
+      });
+
+      assert.equal(response.status, 403);
+    });
+  });
+
+  it("forbids dispatchers from maintenance routes", async () => {
+    const user = makeUser({ role: ROLES.DISPATCHER });
+    mockFindById(user);
+    const token = signAuthToken(user);
+
+    await withServer(async (baseUrl) => {
+      const response = await fetch(`${baseUrl}/api/maintenance`, {
+        headers: {
+          Cookie: `${process.env.AUTH_COOKIE_NAME}=${token}`
+        }
+      });
+
+      assert.equal(response.status, 403);
+    });
+  });
+});

@@ -56,7 +56,7 @@ function normalizeError(error) {
   return {
     statusCode: error.statusCode ?? 500,
     message: error.message ?? "Internal server error",
-    errors: []
+    errors: error.errors ?? []
   };
 }
 
