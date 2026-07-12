@@ -50,7 +50,7 @@ const tripSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['Draft', 'Dispatched', 'Completed', 'Cancelled'],
+      enum: ['Draft', 'Pending Dispatch', 'Dispatched', 'Completed', 'Cancelled'],
       default: 'Draft',
     },
   },
